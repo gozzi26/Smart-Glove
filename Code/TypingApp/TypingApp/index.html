@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="UIC CS494 SP20 Module 5">
+  <meta name="author" content="Frank Errichiello">
+
+  <title>The Typing App</title>
+
+  <!-- CDNS and more -->
+  <script src="https://cdn.jsdelivr.net/npm/p5@1.2.0/lib/p5.js"></script>
+  <script language="javascript" type="text/javascript" src="https://cdn.jsdelivr.net/npm/p5.serialserver@0.0.28/lib/p5.serialport.js"></script>
+  <script src="sketch.js"></script>
+  <script src="p5.sound.js"></script>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="stylesheet.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/css/bootstrap.min.css" integrity="sha384-DhY6onE6f3zzKbjUPRc2hOzGAdEf4/Dz+WJwBvEYL/lkkIsI3ihufq9hk9K4lVoK" crossorigin="anonymous">
+  
+
+<script src="https://kit.fontawesome.com/d9f17fec2b.js" crossorigin="anonymous"></script>
+
+  <script
+			  src="https://code.jquery.com/jquery-3.6.0.min.js"
+			  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+			  crossorigin="anonymous"></script>
+  <script
+			  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+			  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+			  crossorigin="anonymous"></script>
+ 
+</head>
+
+<body>
+
+      <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom fixed-top"> -->
+  
+
+
+      <!-- Home page -->
+      <div class="container-fluid mt-1" id="home">
+        <h1 style="text-align: center;"> Typing App </h1>
+        <div class="row mt-2 mb-2">
+          <div class="col-md-1"></div> 
+          <div class="col-md-10">
+            <div class="row">
+            <div class="col-md-6 p-2 text-center"  style="background: rgba(0,0,0,.8);">
+              <textarea id="typingArea" rows="15" style="width: 100%"></textarea>
+            </div>
+            <div class="col-md-6 p-2 text-left">
+              <div class="row m-0">
+                <div class="col-md-12">
+                  <h3 id="carpelTunnelVal">Risk of Carpel Tunnel: <span  class="green"></span></h3>
+                  <h3 id="modeVal">Current Mode: <span></span></h3>
+                  <h3 id="clipboardVal" class="screen">Currently Copied: <span></span></h3>
+                </div>
+                <div class="col-md-12 " id ="typeHelp">
+                  <div class="row m-0 tip">
+                    - Access edit mode: press down all four fingers and hold for 1 second
+                  </div>
+                  <div class="row m-0 tip">
+                    - Type the selected letter: press both the index and middle fingers down
+                  </div>
+                  <div class="row m-0 tip">
+                    - Move the selected letter left: press the index finger down
+                  </div>
+                  <div class="row m-0 tip">
+                    - Move the selected letter up: press the middle finger down
+                  </div>
+                  <div class="row m-0 tip">
+                    - Move the selected letter right: press the ring finger down
+                  </div>
+                  <div class="row m-0 tip">
+                    - Move the selected letter down: press the pinky finger down
+                  </div>
+                  </div>
+                  <div class="col-md-12 screen" id ="editHelp">
+                    <div class="row m-0 tip">
+                      - Access typing mode: press down all four fingers and hold for 1 second
+                    </div>
+                    <div class="row m-0 tip">
+                      - To move the highlighted portion: move your hand
+                    </div>
+                    <div class="row m-0 tip">
+                      - Copy the highlighted text: press the index finger down
+                    </div>
+                    <div class="row m-0 tip">
+                      - Paste the clipboard contents: press the middle finger down
+                    </div>
+                    <div class="row m-0 tip">
+                      - Delete the highlighted portion: press the ring finger down
+                    </div>
+                    
+                    </div>
+              </div>
+           
+            </div>
+          </div>
+          </div>
+          <div class="col-md-1"></div> 
+        </div>
+        <div class="row" id="keyboardDiv">
+         <div class="col-md-10 m-auto">
+          <ul id="keyboard">
+            <li class="symbol selected">`</li>
+            <li class="symbol">1</li>
+            <li class="symbol">2</li>
+            <li class="symbol">3</li>
+            <li class="symbol">4</li>
+            <li class="symbol">5</li>
+            <li class="symbol">6</li>
+            <li class="symbol">7</li>
+            <li class="symbol">8</li>
+            <li class="symbol">9</li>
+            <li class="symbol">0</li>
+            <li class="symbol">-</li>
+            <li class="symbol">=</li>
+            <li class="delete lastitem">delete</li>
+            <li class="tab">tab</li>
+            <li class="letter">q</li>
+            <li class="letter">w</li>
+            <li class="letter">e</li>
+            <li class="letter">r</li>
+            <li class="letter">t</li>
+            <li class="letter">y</li>
+            <li class="letter">u</li>
+            <li class="letter">i</li>
+            <li class="letter">o</li>
+            <li class="letter">p</li>
+            <li class="symbol">[</li>
+            <li class="symbol">]</li>
+            <li class="symbol lastitem">\</li>
+            <li class="capslock">caps lock</li>
+            <li class="letter">a</li>
+            <li class="letter">s</li>
+            <li class="letter">d</li>
+            <li class="letter">f</li>
+            <li class="letter">g</li>
+            <li class="letter">h</li>
+            <li class="letter">j</li>
+            <li class="letter">k</li>
+            <li class="letter">l</li>
+            <li class="symbol">;</li>
+            <li class="symbol">'</li>
+            <li class="return lastitem">enter</li>
+            <li class="left-shift">lshift</li>
+            <li class="letter">z</li>
+            <li class="letter">x</li>
+            <li class="letter">c</li>
+            <li class="letter">v</li>
+            <li class="letter">b</li>
+            <li class="letter">n</li>
+            <li class="letter">m</li>
+            <li class="symbol">,</li>
+            <li class="symbol">.</li>
+            <li class="symbol">/</li>
+            <li class="right-shift lastitem">rshift</li>
+            <li class="space lastitem">&nbsp;</li>
+        </ul>
+      </div>
+          </div>
+
+          
+      </div>
+
+  
+
+  
+    
+    <!-- /#page-content-wrapper -->
+
+
+  <!-- /#wrapper -->
+  
+ 
+ <script type='text/javascript'>
+
+
+let i;
+
+
+
+   function showModal(id){
+    
+     $(id).modal('show');
+      
+     i = 1;
+     myLoop(id);
+
+  }
+
+  function myLoop(id) {
+    setTimeout(function() {   //  call a 3s setTimeout when the loop is called
+        var symbol = $(`${id} #loadingSymbols`).html();
+        let text = symbol;
+        if(text == '...' ){
+            text= '';
+            if(i > 10){
+              switch(id) {
+                case "#snakeModal":
+                  startSnake();
+                  break;
+                case "#pongModal":
+                  startPong();
+                  break;
+                case "#hangmanModal":
+                  startHangman();
+                  break;
+                case "#emojiModal":
+                  startEmoji();
+                  break;
+                default:
+                  alert("Game does not exist");
+                  break;
+
+              }
+              return;
+            }
+        }
+        else{
+          text += '.';
+        }
+        i++;
+        $(`${id} #loadingSymbols`).html(text);
+        myLoop(id);       
+      }, 500)
+  }
+
+</script>
+
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.bundle.min.js" integrity="sha384-BOsAfwzjNJHrJ8cZidOg56tcQWfp6y72vEJ8xQ9w6Quywb24iOsW913URv1IS4GD" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha2/js/bootstrap.min.js" integrity="sha384-5h4UG+6GOuV9qXh6HqOLwZMY4mnLPraeTrjT5v07o347pj6IkfuoASuGBhfDsp3d" crossorigin="anonymous"></script>
+
+  </body>
+
+
+</html>
